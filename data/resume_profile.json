@@ -1,0 +1,59 @@
+{
+  "name": "Executive Candidate",
+  "title": "Principal Solutions Architect / Technical Project Manager",
+  "experience_years": 16,
+  "summary": "Accomplished and forward-thinking Principal Solutions Architect and Technical Project Manager with over 16 years of leadership in design, development, and deployment of large-scale distributed enterprise systems. Expert in architecting high-throughput backend services, integrating advanced Generative AI/RAG automation systems, and managing DevOps cloud infrastructure. Demonstrated success in leading cross-functional teams to deliver secure, resilient, and highly scalable cloud-native products.",
+  "target_roles": [
+    "Principal Architect",
+    "Senior Solutions Architect",
+    "Technical Lead",
+    "Engineering Manager",
+    "Solutions Architect",
+    "Systems Architect"
+  ],
+  "skills": {
+    "backend_and_systems": [
+      ".NET Core",
+      "C#",
+      "Microservices",
+      "Kafka",
+      "RabbitMQ",
+      "Distributed Systems Architecture",
+      "SQL Server",
+      "NoSQL",
+      "Event-Driven Architecture",
+      "RESTful APIs",
+      "gRPC"
+    ],
+    "ai_ml_and_automation": [
+      "GenAI",
+      "Generative AI",
+      "RAG",
+      "Retrieval-Augmented Generation",
+      "LangChain",
+      "Vector Databases",
+      "Pinecone",
+      "ChromaDB",
+      "Prompt Engineering",
+      "NLP",
+      "Natural Language Processing",
+      "LLM Integration"
+    ],
+    "cloud_and_devops": [
+      "Azure",
+      "AWS",
+      "CI/CD",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "GitHub Actions",
+      "DevOps Automation",
+      "Cloud Migration"
+    ]
+  },
+  "contact": {
+    "email": "candidate.executive@example.com",
+    "phone": "+91-9876543210",
+    "location": "Bengaluru, Karnataka, India"
+  }
+}

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchBoard // Bengaluru Tech Ecosystem Job Locator</title>
+    <meta name="description" content="AI-driven job matching dashboard for senior tech executives in Bengaluru. Automatically maps your resume to targeted openings across 15 industrial domains and 150+ premier companies.">
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;800;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Glow Blobs -->
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+    <div class="glow-blob blob-3"></div>
+
+    <div class="app-container">
+        <!-- Top Analytics Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <div>
+                    <h1>MatchBoard</h1>
+                    <p class="brand-subtitle">AI-Driven Profile Analytics & Executive Job Locator</p>
+                </div>
+            </div>
+            
+            <div class="header-stats">
+                <div class="stat-card">
+                    <span class="stat-label">Active Openings</span>
+                    <span class="stat-value" id="stat-total-jobs">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">High Matches</span>
+                    <span class="stat-value text-emerald" id="stat-high-matches">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Avg Match Score</span>
+                    <span class="stat-value text-blue" id="stat-avg-score">0%</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Last Sync Time</span>
+                    <span class="stat-value text-muted" id="stat-sync-time">Daily at 00:00 UTC</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Layout -->
+        <main class="grid-layout">
+            <!-- Sidebar Panel: Profile & Filters -->
+            <aside class="sidebar-panel">
+                <!-- Profile Vector Profile Summary -->
+                <div class="panel-section profile-section">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-user-tie"></i> Executive Profile</h2>
+                        <button class="icon-btn" id="edit-profile-btn" title="Edit Profile Skills">
+                            <i class="fa-solid fa-user-gear"></i> Edit
+                        </button>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <i class="fa-solid fa-id-badge"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profile-name">Loading Profile...</h3>
+                            <p class="profile-title" id="profile-title">Loading...</p>
+                            <span class="experience-badge" id="profile-experience">16+ Years Experience</span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-summary">
+                        <p id="profile-summary-text">...</p>
+                    </div>
+                    
+                    <div class="profile-skills-tags">
+                        <div class="skills-category-group">
+                            <span class="skills-cat-title">Backend & Systems:</span>
+                            <div class="tags-container" id="profile-backend-tags"></div>
+                        </div>
+                        <div class="skills-category-group">
+                            <span class="skills-cat-title">AI & Automation:</span>
+                            <div class="tags-container" id="profile-ai-tags"></div>
+                        </div>
+                        <div class="skills-category-group">
+                            <span class="skills-cat-title">Cloud & DevOps:</span>
+                            <div class="tags-container" id="profile-cloud-tags"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters Control -->
+                <div class="panel-section filters-section">
+                    <h2><i class="fa-solid fa-sliders"></i> Match Settings</h2>
+                    
+                    <!-- Search Input -->
+                    <div class="filter-group">
+                        <label for="search-input">Search Keywords / Company</label>
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="search-input" placeholder="e.g. Kafka, Google, Architect...">
+                        </div>
+                    </div>
+
+                    <!-- Domain Selector -->
+                    <div class="filter-group">
+                        <label for="domain-filter">Industrial Domain</label>
+                        <select id="domain-filter">
+                            <option value="all">All Domains (15 Sectors)</option>
+                            <!-- Dynamic domains will be loaded here -->
+                        </select>
+                    </div>
+
+                    <!-- Match Score Threshold Slider -->
+                    <div class="filter-group">
+                        <div class="slider-label-row">
+                            <label for="match-threshold">Min Match Threshold</label>
+                            <span id="threshold-val">50%</span>
+                        </div>
+                        <input type="range" id="match-threshold" min="40" max="90" value="50" class="slider">
+                    </div>
+
+                    <!-- Sort Settings -->
+                    <div class="filter-group">
+                        <label for="sort-select">Sort Openings By</label>
+                        <select id="sort-select">
+                            <option value="score-desc">Highest Match Score</option>
+                            <option value="date-desc">Most Recent Postings</option>
+                            <option value="experience-asc">Experience Required (Low to High)</option>
+                            <option value="company-asc">Company Name (A-Z)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="reset-btn" id="reset-filters-btn">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Match Settings
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Listings Section -->
+            <section class="listings-section">
+                <!-- Tabs Row -->
+                <div class="listings-header">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-filter="all">
+                            All Jobs <span class="tab-count" id="count-all">0</span>
+                        </button>
+                        <button class="tab-btn" data-filter="high">
+                            High Match <span class="tab-count bg-emerald" id="count-high">0</span>
+                        </button>
+                        <button class="tab-btn" data-filter="medium">
+                            Medium Match <span class="tab-count bg-blue" id="count-medium">0</span>
+                        </button>
+                        <button class="tab-btn" data-filter="low">
+                            Low Match <span class="tab-count" id="count-low">0</span>
+                        </button>
+                    </div>
+                    <div class="active-filters-info" id="active-filters-pill">
+                        Showing filtered listings
+                    </div>
+                </div>
+
+                <!-- Job Cards Wrapper -->
+                <div class="job-cards-list" id="job-cards-container">
+                    <!-- Dynamic Job Cards will be generated here -->
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Analyzing job feeds and running matching engine...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-brand">
+                <div class="footer-brand-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <span><strong>MatchBoard</strong> &mdash; AI-Powered Executive Job Matching</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i> Repository</a>
+                <a href="#" id="footer-run-info"><i class="fa-solid fa-clock-rotate-left"></i> Pipeline Logs</a>
+            </div>
+            <div class="footer-note">
+                Data refreshed daily at 00:00 UTC via GitHub Actions &bull; Bengaluru Tech Ecosystem
+            </div>
+        </footer>
+    </div>
+
+    <!-- Job Details Slide-Out Drawer -->
+    <div class="details-drawer-overlay" id="details-overlay"></div>
+    <div class="details-drawer" id="details-drawer">
+        <button class="close-drawer-btn" id="close-drawer-btn">&times;</button>
+        <div class="drawer-content" id="drawer-content">
+            <!-- Filled dynamically -->
+        </div>
+    </div>
+
+    <!-- Interactive Resume Profile Editor Modal -->
+    <div class="modal-overlay" id="profile-modal-overlay"></div>
+    <div class="profile-modal" id="profile-modal">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-user-pen"></i> Edit Profile & Re-calculate Matching</h3>
+            <button class="close-modal-btn" id="close-modal-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-row">
+                <div class="input-col">
+                    <label for="edit-name">Full Name</label>
+                    <input type="text" id="edit-name">
+                </div>
+                <div class="input-col">
+                    <label for="edit-title">Professional Title</label>
+                    <input type="text" id="edit-title">
+                </div>
+            </div>
+            
+            <div class="modal-row">
+                <div class="input-col">
+                    <label for="edit-experience">Years of Experience</label>
+                    <input type="number" id="edit-experience">
+                </div>
+                <div class="input-col">
+                    <label for="edit-location">Location</label>
+                    <input type="text" id="edit-location">
+                </div>
+            </div>
+
+            <div class="input-col full-width">
+                <label for="edit-summary">Executive Summary</label>
+                <textarea id="edit-summary" rows="4"></textarea>
+            </div>
+
+            <div class="input-col full-width">
+                <label for="edit-skills-backend">Backend & Systems Skills (comma separated)</label>
+                <textarea id="edit-skills-backend" rows="2"></textarea>
+            </div>
+
+            <div class="input-col full-width">
+                <label for="edit-skills-ai">AI & Automation Skills (comma separated)</label>
+                <textarea id="edit-skills-ai" rows="2"></textarea>
+            </div>
+
+            <div class="input-col full-width">
+                <label for="edit-skills-cloud">Cloud & DevOps Skills (comma separated)</label>
+                <textarea id="edit-skills-cloud" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="secondary-btn" id="cancel-modal-btn">Cancel</button>
+            <button class="primary-btn" id="save-profile-btn">
+                <i class="fa-solid fa-arrows-spin"></i> Save & Recalculate
+            </button>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

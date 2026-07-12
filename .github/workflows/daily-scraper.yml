@@ -1,0 +1,36 @@
+name: Daily Telecom & Tech Job Scraper
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Executes automatically every single day at midnight UTC
+  workflow_dispatch:   # Permits manual trigger from the Actions tab
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Initialize Python Runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install System Dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Execute Scraping and AI Matching Pipeline
+        run: |
+          python src/scraper/engine.py
+          python src/matching/vector_matcher.py
+
+      - name: Commit and Push Refreshed Datasets
+        run: |
+          git config --global user.name "GitHub Automated Scraper"
+          git config --global user.email "scraper-bot@github.com"
+          git add data/latest_jobs.json data/scraped_jobs.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Automated Sync: Latest Openings ($(date +'%Y-%m-%d'))" && git push)

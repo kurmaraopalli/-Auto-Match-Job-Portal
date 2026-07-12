@@ -133,7 +133,7 @@ jobs:
       - name: Initialize Python Runtime
         uses: actions/setup-python@v5
         with:
-          python-with-version: '3.11'
+          python-version: '3.11'
           cache: 'pip'
 
       - name: Install System Dependencies
